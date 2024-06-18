@@ -542,7 +542,7 @@ def lexer(codigo_fuente):
         TOKENS_MOMENTANEOS = []
         todos_trampa = False
         comienzo_lexema = posicion_actual
-        while not todos_trampa:
+        while not todos_trampa and posicion_actual <= len(codigo_fuente):
             cadena_actual = codigo_fuente[comienzo_lexema:posicion_actual + 1]    
             todos_trampa = True
             TOKENS_DETECTADOS = TOKENS_MOMENTANEOS
@@ -556,26 +556,21 @@ def lexer(codigo_fuente):
                 elif estado == ESTADO_NO_FINAL:
                     todos_trampa = False      
             
-            posicion_actual +=2
-
+            posicion_actual +=1
 
         print(f"DEBUG: tokens detectados = {TOKENS_DETECTADOS} cadena {cadena_actual} comienzo lexema: {comienzo_lexema} posicion actual {posicion_actual}"  )
         if len(TOKENS_DETECTADOS) == 0:
             raise Exception("ERROR: No se encontro token" + cadena_actual)
 
+        posicion_actual -=1
+        cadena_actual = codigo_fuente[comienzo_lexema:posicion_actual]
         tipo_token = TOKENS_DETECTADOS[0]
         token = (tipo_token, cadena_actual)
         tokens.append(token)
     return tokens
 
 
-output = lexer("var")
-print(output)
 
-# output = mid("var variable1")
-# if output == ESTADO_TRAMPA:
-#     print ('Estado trampa')
-# if output == ESTADO_FINAL:
-#     print ('Estado aceptado')
-# if output == ESTADO_NO_FINAL:
-#     print('Estado no aceptado')
+#prueba del lexer
+output = lexer("var variable1")
+print(output)
