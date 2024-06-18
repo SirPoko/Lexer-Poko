@@ -560,7 +560,7 @@ def lexer(codigo_fuente):
 
         print(f"DEBUG: tokens detectados = {TOKENS_DETECTADOS} cadena {cadena_actual} comienzo lexema: {comienzo_lexema} posicion actual {posicion_actual}"  )
         if len(TOKENS_DETECTADOS) == 0:
-            raise Exception("ERROR: No se encontro token" + cadena_actual)
+            raise Exception("ERROR: No se encontro token: " + cadena_actual)
 
         posicion_actual -=1
         cadena_actual = codigo_fuente[comienzo_lexema:posicion_actual]
@@ -573,4 +573,9 @@ def lexer(codigo_fuente):
 
 #prueba del lexer
 output = lexer("var variable1")
+print(output)
+
+
+#prueba para mostrar que da error si hay un caracter no valido
+output = lexer("var vari¨able1")
 print(output)
